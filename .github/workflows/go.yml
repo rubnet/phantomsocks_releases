@@ -21,13 +21,21 @@ jobs:
       run: |
         sudo apt update && sudo apt install -y libpcap-dev
         go build -v ./...
-        go build -v -tags pcap ./...
-        go build -v -tags rawsocket ./...
+        go build -v -tags pcap ./... -o phantomsocks_pcap
+        go build -v -tags rawsocket ./...  -o phantomsocks_rawsocket
+        
+        env GOOS=windows GOARCH=amd64 go build -v -tags pcap ./... -o win_phantomsocks_pcap.exe
+        env GOOS=windows GOARCH=amd64 go build -v -tags windivert ./...  -o win_phantomsocks_windivert.exe
     - name: Upload linux build
       uses: actions/upload-artifact@v3
       with:
-        name: phantomsocks_linux_rawsocket
-        path: phantomsocks
+        name: phantomsocks_linux
+        path: phantomsocks* 
+    - name: Upload windows build
+      uses: actions/upload-artifact@v3
+      with:
+        name: phantomsocks_win
+        path: win_phantomsocks*.exe
         
   build-windows:
     runs-on: windows-latest
@@ -43,12 +51,7 @@ jobs:
       run: |
         go build -v ./...
         go build -v -tags pcap ./...
-        go build -v -tags windivert ./...
-    - name: Upload windows build
-      uses: actions/upload-artifact@v3
-      with:
-        name: phantomsocks_win_windivert
-        path: phantomsocks*exe
+        go build -v -tags windivert ./... 
         
   build-macos:
     runs-on: macos-latest
