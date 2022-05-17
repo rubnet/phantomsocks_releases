@@ -21,11 +21,12 @@ jobs:
       run: |
         sudo apt update && sudo apt install -y libpcap-dev
         go build -v ./...
-        go build -v -tags pcap -o phantomsocks_pcap ./...
-        go build -v -tags rawsocket -o phantomsocks_rawsocket ./... 
+        go build -v -tags pcap -trimpath -ldflags="-s -w -extldflags=-static" -o phantomsocks_pcap 
+        go build -v -tags rawsocket -trimpath -ldflags="-s -w -extldflags=-static" -o phantomsocks_rawsocket 
         
-        env GOOS=windows GOARCH=amd64 go build -v -tags pcap -o win_phantomsocks_pcap.exe ./...
-        env GOOS=windows GOARCH=amd64 go build -v -tags windivert -o win_phantomsocks_windivert.exe ./... 
+        env GOOS=windows GOARCH=amd64 go build -v -tags pcap -trimpath -ldflags="-s -w -extldflags=-static" -o win_phantomsocks_pcap.exe 
+        env GOOS=windows GOARCH=amd64 go build -v -tags windivert -trimpath -ldflags="-s -w -extldflags=-static" -o win_phantomsocks_windivert.exe 
+        ls *
     - name: Upload linux build
       uses: actions/upload-artifact@v3
       with:
