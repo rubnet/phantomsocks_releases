@@ -23,6 +23,11 @@ jobs:
         go build -v ./...
         go build -v -tags pcap ./...
         go build -v -tags rawsocket ./...
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: phantomsocks_linux_rawsocket
+        path: phantomsocks
         
   build-windows:
     runs-on: windows-latest
@@ -39,6 +44,11 @@ jobs:
         go build -v ./...
         go build -v -tags pcap ./...
         go build -v -tags windivert ./...
+    - name: Upload build
+      uses: actions/upload-artifact@v3
+      with:
+        name: phantomsocks_win_windivert
+        path: phantomsocks*exe
         
   build-macos:
     runs-on: macos-latest
