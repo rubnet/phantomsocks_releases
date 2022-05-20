@@ -21,51 +21,18 @@ jobs:
       run: |
         sudo apt update && sudo apt install -y libpcap-dev
         go build -v ./...
-        go build -v -tags pcap -trimpath -ldflags="-s -w -extldflags=-static" -o phantomsocks_pcap 
-        go build -v -tags rawsocket -trimpath -ldflags="-s -w -extldflags=-static" -o phantomsocks_rawsocket 
+        make releases -j 3
+        ls bin/* -l
         
-        env GOOS=windows GOARCH=amd64 go build -v -tags pcap -trimpath -ldflags="-s -w -extldflags=-static" -o win_phantomsocks_pcap.exe 
-        env GOOS=windows GOARCH=amd64 go build -v -tags windivert -trimpath -ldflags="-s -w -extldflags=-static" -o win_phantomsocks_windivert.exe 
-        ls *
     - name: Upload linux build
       uses: actions/upload-artifact@v3
       with:
-        name: phantomsocks_linux
-        path: phantomsocks* 
+        name: phantomsocks_linux_rawsocket
+        path: bin/phantomsocks-linux* 
+        
     - name: Upload windows build
       uses: actions/upload-artifact@v3
       with:
-        name: phantomsocks_win
-        path: win_phantomsocks*.exe
-        
-  build-windows:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.18
-
-    - name: Build
-      run: |
-        go build -v ./...
-        go build -v -tags pcap ./...
-        go build -v -tags windivert ./... 
-        
-  build-macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.18
-
-    - name: Build
-      run: |
-        go build -v ./...
-        go build -v -tags pcap ./...
-        
+        name: phantomsocks_win_windivert
+        path: bin/phantomsocks-windows*
+   
