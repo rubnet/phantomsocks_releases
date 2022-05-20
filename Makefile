@@ -1,7 +1,7 @@
 NAME=phantomsocks
 BINDIR=bin
 VERSION=$(shell date +%s)
-GOBUILD=CGO_ENABLED=0 go build -trimpath --ldflags="-s -w" -v -x -a
+GOBUILD=CGO_ENABLED=0 go build -trimpath --ldflags="-s -w" -v -x
 GOFILES=main.go
 
 PLATFORM_LIST = \
