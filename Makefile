@@ -5,8 +5,6 @@ GOBUILD=go build -trimpath --ldflags="-s -w" -v -x
 GOFILES=main.go
 
 PLATFORM_LIST = \
-	darwin-amd64 \
-	darwin-arm64 \
 	linux-amd64 \
 	linux-armv5 \
 	linux-armv7 \
