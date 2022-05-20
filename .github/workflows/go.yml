@@ -20,9 +20,8 @@ jobs:
     - name: Build
       run: |
         sudo apt update && sudo apt install -y libpcap-dev
-        go build -v ./...
-        make all-arch -j 4
-        make releases
+        go build -v ./... 
+        make releases -j 4
         ls bin/* -l
         
     - name: Upload linux build
