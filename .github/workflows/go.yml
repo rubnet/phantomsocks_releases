@@ -21,7 +21,8 @@ jobs:
       run: |
         sudo apt update && sudo apt install -y libpcap-dev
         go build -v ./...
-        make releases -j 3
+        make all-arch -j 4
+        make releases
         ls bin/* -l
         
     - name: Upload linux build
